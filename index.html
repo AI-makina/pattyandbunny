@@ -5,18 +5,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="PATTY & BUN-NY - Build Your Perfect Burger">
     <title>PATTY & BUN-NY</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css?v=1253">
 </head>
 <body>
     <!-- ========================================
          SECTION 1: HERO SECTION
          ======================================== -->
-    <section class="hero-section">
-        <div class="hero-background"></div>
-        <div class="hero-overlay"></div>
-        <img src="assets/logo/patty and bunny_alpha.png" alt="PATTY & BUN-NY Logo" class="logo">
-        <img src="assets/logo/pattyandbunny_heading.png" alt="PATTY & BUN-NY - 79 Years Flipping Burgers" class="hero-heading">
-    </section>
+    <div class="hero-section-wrapper">
+        <section class="hero-section">
+            <div class="hero-background"></div>
+            <div class="hero-overlay"></div>
+            <img src="assets/logo/patty and bunny_alpha.png" alt="PATTY & BUN-NY Logo" class="logo">
+            <video class="hero-video-behind" autoplay loop muted playsinline preload="auto">
+                <source src="assets/video/videos_alpha/characters_saying_hi_hevc.mov" type="video/mp4; codecs=hvc1">
+                <source src="assets/video/videos_alpha/characters_saying_hi.webm" type="video/webm">
+            </video>
+            <img src="assets/logo/pattyandbunny_heading2.png" alt="PATTY & BUN-NY - 79 Years Flipping Burgers" class="hero-heading">
+
+            <!-- Menu Panels -->
+            <div class="hero-menu-left">
+                <div class="menu-grid">
+                    <!-- Main Title -->
+                    <img src="assets/logo/1_burger_text.png" alt="Burgers" class="menu-title">
+
+                    <!-- 50's Classic Section -->
+                    <img src="assets/logo/2_50s_classic.png" alt="50's Classic" class="menu-subheading">
+
+                    <!-- Fatty Patty Row -->
+                    <div class="menu-item-row">
+                        <img src="assets/logo/3_fatty_text.png" alt="Fatty Patty" class="menu-item-text">
+                        <div class="food-image-container">
+                            <img src="assets/image/menu_images/alpha_menu_images/fatty_patty_color_48.png" alt="Fatty Patty" class="food-image">
+                            <button class="add-btn">ADD</button>
+                        </div>
+                    </div>
+
+                    <!-- BBQ Row -->
+                    <div class="menu-item-row">
+                        <img src="assets/logo/4_bbq_text.png" alt="BBQ Burger" class="menu-item-text">
+                        <div class="food-image-container">
+                            <img src="assets/image/menu_images/alpha_menu_images/bbq_burger_color_50.png" alt="BBQ Burger" class="food-image">
+                            <button class="add-btn">ADD</button>
+                        </div>
+                    </div>
+
+                    <!-- New Arrival Section -->
+                    <img src="assets/logo/5_new_text.png" alt="New Arrival" class="menu-subheading">
+
+                    <!-- Trucker's Row -->
+                    <div class="menu-item-row">
+                        <img src="assets/logo/6_trucker_text.png" alt="Trucker's Bacon Deluxe" class="menu-item-text">
+                        <div class="food-image-container">
+                            <img src="assets/image/menu_images/alpha_menu_images/trucker_bacon_deluxe_color_48.png" alt="Trucker's Bacon Deluxe" class="food-image">
+                            <button class="add-btn">ADD</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-menu-right">
+                <div class="menu-grid">
+                    <!-- Main Title -->
+                    <img src="assets/logo/7_side_text.png" alt="Sides" class="menu-title">
+
+                    <!-- Fries Row -->
+                    <div class="menu-item-row">
+                        <img src="assets/logo/9_fries_text.png" alt="Fries" class="menu-item-text">
+                        <div class="food-image-container">
+                            <img src="assets/image/menu_images/alpha_menu_images/golden_road_fries_color_99.png" alt="Golden Road Fries" class="food-image">
+                            <button class="add-btn">ADD</button>
+                        </div>
+                    </div>
+
+                    <!-- Drinks Row -->
+                    <div class="menu-item-row">
+                        <div class="menu-text-with-disclaimer">
+                            <img src="assets/logo/8_drinks_text.png" alt="Drinks" class="menu-item-text">
+                            <img src="assets/logo/10_disclamer_text.png" alt="Price varies by size" class="menu-disclaimer">
+                        </div>
+                        <div class="food-image-container">
+                            <img src="assets/image/menu_images/alpha_menu_images/soda_edge_150.png" alt="Coca-Cola" class="food-image">
+                            <button class="add-btn">ADD</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 
     <!-- ========================================
          SECTION 2: MENU BUILDER
@@ -65,31 +139,40 @@
             <!-- Right Side: Video Stack -->
             <div class="video-stack-container">
                 <video class="topping-video" data-topping="top_bun" autoplay loop muted playsinline preload="auto">
-                    <source src="assets/video/videos_alpha/top_bun_long.mov" type="video/quicktime">
+                    <source src="assets/video/videos_alpha/top_bun_long_hevc.mov" type="video/mp4; codecs=hvc1">
+                    <source src="assets/video/videos_alpha/top_bun_long.webm" type="video/webm">
                 </video>
                 <video class="topping-video" data-topping="pickles" autoplay loop muted playsinline preload="auto">
-                    <source src="assets/video/videos_alpha/2_pickles.mov" type="video/quicktime">
+                    <source src="assets/video/videos_alpha/2_pickles_hevc.mov" type="video/mp4; codecs=hvc1">
+                    <source src="assets/video/videos_alpha/2_pickles.webm" type="video/webm">
                 </video>
                 <video class="topping-video" data-topping="onion" autoplay loop muted playsinline preload="auto">
-                    <source src="assets/video/videos_alpha/3_onion.mov" type="video/quicktime">
+                    <source src="assets/video/videos_alpha/3_onion_hevc.mov" type="video/mp4; codecs=hvc1">
+                    <source src="assets/video/videos_alpha/3_onion.webm" type="video/webm">
                 </video>
                 <video class="topping-video" data-topping="cheese" autoplay loop muted playsinline preload="auto">
-                    <source src="assets/video/videos_alpha/4_cheese.mov" type="video/quicktime">
+                    <source src="assets/video/videos_alpha/4_cheese_hevc.mov" type="video/mp4; codecs=hvc1">
+                    <source src="assets/video/videos_alpha/4_cheese.webm" type="video/webm">
                 </video>
                 <video class="topping-video" data-topping="patty" autoplay loop muted playsinline preload="auto">
-                    <source src="assets/video/videos_alpha/5_patty.mov" type="video/quicktime">
+                    <source src="assets/video/videos_alpha/5_patty_hevc.mov" type="video/mp4; codecs=hvc1">
+                    <source src="assets/video/videos_alpha/5_patty.webm" type="video/webm">
                 </video>
                 <video class="topping-video" data-topping="pattyandcheese" autoplay loop muted playsinline preload="auto">
-                    <source src="assets/video/videos_alpha/5_1_pattyandcheese.mov" type="video/quicktime">
+                    <source src="assets/video/videos_alpha/5_1_pattyandcheese_hevc.mov" type="video/mp4; codecs=hvc1">
+                    <source src="assets/video/videos_alpha/5_1_pattyandcheese.webm" type="video/webm">
                 </video>
                 <video class="topping-video" data-topping="tomato" autoplay loop muted playsinline preload="auto">
-                    <source src="assets/video/videos_alpha/6_tomato.mov" type="video/quicktime">
+                    <source src="assets/video/videos_alpha/6_tomato_hevc.mov" type="video/mp4; codecs=hvc1">
+                    <source src="assets/video/videos_alpha/6_tomato.webm" type="video/webm">
                 </video>
                 <video class="topping-video" data-topping="lettuce" autoplay loop muted playsinline preload="auto">
-                    <source src="assets/video/videos_alpha/7_lettuce.mov" type="video/quicktime">
+                    <source src="assets/video/videos_alpha/7_lettuce_hevc.mov" type="video/mp4; codecs=hvc1">
+                    <source src="assets/video/videos_alpha/7_lettuce.webm" type="video/webm">
                 </video>
                 <video class="topping-video" data-topping="bottom_bun" autoplay loop muted playsinline preload="auto">
-                    <source src="assets/video/videos_alpha/8_bottom_bun.mov" type="video/quicktime">
+                    <source src="assets/video/videos_alpha/8_bottom_bun_hevc.mov" type="video/mp4; codecs=hvc1">
+                    <source src="assets/video/videos_alpha/8_bottom_bun.webm" type="video/webm">
                 </video>
             </div>
         </div>
@@ -159,6 +242,6 @@
         </div>
     </section>
 
-    <script src="js/main.js?v=1067"></script>
+    <script src="js/main.js?v=1253"></script>
 </body>
 </html>

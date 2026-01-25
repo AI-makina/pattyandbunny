@@ -7,7 +7,90 @@
 document.addEventListener('DOMContentLoaded', function() {
     initMenuBuilder();
     initMenuBuilder2();
+    initHeroScroll();
 });
+
+/* ========================================
+   HERO SCROLL EFFECT
+   ======================================== */
+
+function initHeroScroll() {
+    var heroHeading = document.querySelector('.hero-heading');
+    var heroVideo = document.querySelector('.hero-video-behind');
+    var heroWrapper = document.querySelector('.hero-section-wrapper');
+    var heroOverlay = document.querySelector('.hero-overlay');
+    var menuLeft = document.querySelector('.hero-menu-left');
+    var menuRight = document.querySelector('.hero-menu-right');
+
+    if (!heroHeading || !heroVideo || !heroWrapper) return;
+
+
+    // Set initial positions (both centered)
+    heroVideo.style.transform = 'translate(-50%, -50%)';
+    heroHeading.style.transform = 'translate(-50%, -50%)';
+
+    window.addEventListener('scroll', function() {
+        var scrollY = window.scrollY;
+        var viewportHeight = window.innerHeight;
+
+        // Phase 1: Video reveal (0 to 50vh scroll)
+        var phase1End = viewportHeight * 0.5;
+        var phase1Progress = Math.min(scrollY / phase1End, 1);
+
+        // Phase 2: Fade out video and heading (50vh to 100vh scroll)
+        var phase2Start = phase1End;
+        var phase2End = viewportHeight * 1.0;
+        var phase2Progress = scrollY > phase2Start ? Math.min((scrollY - phase2Start) / (phase2End - phase2Start), 1) : 0;
+
+        // Phase 3: Menu sweep in (100vh to 200vh scroll)
+        var phase3Start = phase2End;
+        var phase3End = viewportHeight * 2.0;
+        var phase3Progress = scrollY > phase3Start ? Math.min((scrollY - phase3Start) / (phase3End - phase3Start), 1) : 0;
+
+        // Phase 1: Video shifts up 300px, fades in
+        var videoMoveUp = phase1Progress * 300;
+        var headingMoveUp = phase1Progress * 30;
+
+        // Video fades in from 0% to 100% over first 50px of shift
+        var fadeEndPx = 50;
+        var videoFadeIn = Math.min(videoMoveUp / fadeEndPx, 1);
+
+        // Phase 2: Both fade out (video starts at 1, heading starts at 1)
+        var fadeOutOpacity = 1 - phase2Progress;
+
+        // Final video opacity: fade in during phase 1, fade out during phase 2
+        var finalVideoOpacity = phase2Progress > 0 ? fadeOutOpacity : videoFadeIn;
+        var finalHeadingOpacity = fadeOutOpacity;
+
+        // Apply transforms and opacity for video and heading
+        heroVideo.style.transform = 'translate(-50%, calc(-50% - ' + videoMoveUp + 'px))';
+        heroVideo.style.opacity = finalVideoOpacity;
+        heroHeading.style.transform = 'translate(-50%, calc(-50% - ' + headingMoveUp + 'px))';
+        heroHeading.style.opacity = finalHeadingOpacity;
+
+        // Phase 3: Menu panels sweep in
+        if (menuLeft && menuRight) {
+            // Eased progress for smoother animation
+            var easeOut = 1 - Math.pow(1 - phase3Progress, 3);
+
+            // Left menu: from -50% (off-screen left) to 7% (left side of viewport)
+            var leftPosition = -50 + (57 * easeOut); // -50% to 7%
+            menuLeft.style.left = leftPosition + '%';
+            menuLeft.style.opacity = phase3Progress;
+
+            // Right menu: from -50% (off-screen right) to 7% (right side of viewport)
+            var rightPosition = -50 + (57 * easeOut); // -50% to 7%
+            menuRight.style.right = rightPosition + '%';
+            menuRight.style.opacity = phase3Progress;
+        }
+
+        // Overlay opacity: transition from 50% to 75% during phase 3
+        if (heroOverlay) {
+            var overlayOpacity = 0.5 + (0.25 * phase3Progress); // 0.5 to 0.75
+            heroOverlay.style.backgroundColor = 'rgba(0, 0, 0, ' + overlayOpacity + ')';
+        }
+    });
+}
 
 function initMenuBuilder() {
     var toppingItems = document.querySelectorAll('.topping-item');
@@ -19,6 +102,7 @@ function initMenuBuilder() {
             updateToppingVideos();
         });
     });
+
 
     updateToppingVideos();
 }
