@@ -5,13 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="PATTY & BUN-NY - Build Your Perfect Burger">
     <title>PATTY & BUN-NY</title>
-    <link rel="stylesheet" href="css/styles.css?v=1282">
+    <link rel="stylesheet" href="css/styles.css?v=1287">
 </head>
 <body>
     <!-- ========================================
          SECTION 1: HERO SECTION
          ======================================== -->
-    <div class="hero-section-wrapper">
+    <!-- Navigation Bar -->
+    <nav class="main-nav">
+        <a href="#hero" class="nav-link" data-nav="home">HOME</a>
+        <div class="nav-dropdown">
+            <a href="#" class="nav-link" data-nav="menu">MENU <span class="dropdown-arrow">&#9662;</span></a>
+            <div class="dropdown-content">
+                <a href="#hero-menu" data-nav="burgers">Burgers</a>
+                <a href="#hero-menu" data-nav="sides">Sides</a>
+                <a href="#hero-menu" data-nav="drinks">Drinks</a>
+                <a href="#menu-builder" data-nav="custom">Custom</a>
+            </div>
+        </div>
+        <a href="#" class="nav-link" data-nav="about">ABOUT</a>
+    </nav>
+
+    <div class="hero-section-wrapper" id="hero">
         <section class="hero-section">
             <div class="hero-background"></div>
             <div class="hero-overlay"></div>
@@ -107,7 +122,7 @@
     <!-- ========================================
          SECTION 3: MENU BUILDER
          ======================================== -->
-    <section class="menu-builder-section">
+    <section class="menu-builder-section" id="menu-builder">
         <img src="assets/logo/build_your_burger_heading.png" alt="Build Your Burger" class="section-heading">
         <div class="menu-builder-container">
             <!-- Left Side: Toppings Table -->
@@ -120,6 +135,7 @@
 
                 <!-- Toppings Panel -->
                 <div class="toppings-panel active-panel">
+                <button class="select-all-btn" data-state="default">Select All</button>
                 <div class="toppings-list">
                     <label class="topping-item" data-topping="top_bun">
                         <input type="checkbox" checked>
@@ -199,45 +215,117 @@
                     </label>
                 </div>
                 </div>
+
+                <!-- Sides Panel -->
+                <div class="sides-panel">
+                <div class="sides-list">
+                    <div class="side-item" data-side="fries">
+                        <input type="checkbox" id="side-fries" class="side-checkbox">
+                        <label for="side-fries" class="side-label">
+                            <img src="assets/image/sides section/golden_road_fries_color_99.png" alt="Golden Road Fries" class="side-thumb">
+                            <span class="side-name">Golden Road Fries</span>
+                        </label>
+                        <div class="size-selector">
+                            <label class="size-option"><input type="radio" name="size-fries" value="small"><span>S</span></label>
+                            <label class="size-option"><input type="radio" name="size-fries" value="medium" checked><span>M</span></label>
+                            <label class="size-option"><input type="radio" name="size-fries" value="large"><span>L</span></label>
+                        </div>
+                    </div>
+                    <div class="side-item" data-side="onion_rings">
+                        <input type="checkbox" id="side-onion-rings" class="side-checkbox">
+                        <label for="side-onion-rings" class="side-label">
+                            <img src="assets/image/sides section/onion_rings_transparent.png" alt="Onion Rings" class="side-thumb">
+                            <span class="side-name">Onion Rings</span>
+                        </label>
+                        <div class="size-selector">
+                            <label class="size-option"><input type="radio" name="size-onion-rings" value="small"><span>S</span></label>
+                            <label class="size-option"><input type="radio" name="size-onion-rings" value="medium" checked><span>M</span></label>
+                            <label class="size-option"><input type="radio" name="size-onion-rings" value="large"><span>L</span></label>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+                <!-- Drinks Panel -->
+                <div class="drinks-panel">
+                <div class="drinks-list">
+                    <div class="drink-item" data-drink="cola">
+                        <input type="checkbox" id="drink-cola" class="drink-checkbox">
+                        <label for="drink-cola" class="drink-label">
+                            <img src="assets/image/sides section/soda_edge_150.png" alt="Coca-Cola" class="drink-thumb">
+                            <span class="drink-name">Coca-Cola</span>
+                        </label>
+                        <div class="size-selector">
+                            <label class="size-option"><input type="radio" name="size-cola" value="small"><span>S</span></label>
+                            <label class="size-option"><input type="radio" name="size-cola" value="medium" checked><span>M</span></label>
+                            <label class="size-option"><input type="radio" name="size-cola" value="large"><span>L</span></label>
+                        </div>
+                    </div>
+                    <div class="drink-item" data-drink="sprite">
+                        <input type="checkbox" id="drink-sprite" class="drink-checkbox">
+                        <label for="drink-sprite" class="drink-label">
+                            <img src="assets/image/sides section/sprite_soda_transparent.png" alt="Sprite" class="drink-thumb">
+                            <span class="drink-name">Sprite</span>
+                        </label>
+                        <div class="size-selector">
+                            <label class="size-option"><input type="radio" name="size-sprite" value="small"><span>S</span></label>
+                            <label class="size-option"><input type="radio" name="size-sprite" value="medium" checked><span>M</span></label>
+                            <label class="size-option"><input type="radio" name="size-sprite" value="large"><span>L</span></label>
+                        </div>
+                    </div>
+                    <div class="drink-item" data-drink="fanta">
+                        <input type="checkbox" id="drink-fanta" class="drink-checkbox">
+                        <label for="drink-fanta" class="drink-label">
+                            <img src="assets/image/sides section/fanta_soda_transparent.png" alt="Fanta" class="drink-thumb">
+                            <span class="drink-name">Fanta</span>
+                        </label>
+                        <div class="size-selector">
+                            <label class="size-option"><input type="radio" name="size-fanta" value="small"><span>S</span></label>
+                            <label class="size-option"><input type="radio" name="size-fanta" value="medium" checked><span>M</span></label>
+                            <label class="size-option"><input type="radio" name="size-fanta" value="large"><span>L</span></label>
+                        </div>
+                    </div>
+                </div>
+                </div>
             </div>
 
             <!-- Right Side: Video Stack -->
             <div class="video-stack-container">
                 <video class="topping-video" data-topping="top_bun" autoplay loop muted playsinline preload="auto">
-                    <source src="assets/video/videos_alpha/top_bun_long_hevc.mov" type="video/mp4; codecs=hvc1">
-                    <source src="assets/video/videos_alpha/top_bun_long.webm" type="video/webm">
+                    <source src="assets/video/longer%20alpha%20videos/1_top_bun_hevc.mov" type="video/mp4; codecs=hvc1">
+                    <source src="assets/video/longer%20alpha%20videos/1_top_bun.webm" type="video/webm">
                 </video>
                 <video class="topping-video" data-topping="pickles" autoplay loop muted playsinline preload="auto">
-                    <source src="assets/video/videos_alpha/2_pickles_hevc.mov" type="video/mp4; codecs=hvc1">
-                    <source src="assets/video/videos_alpha/2_pickles.webm" type="video/webm">
+                    <source src="assets/video/longer%20alpha%20videos/2_pickles_hevc.mov" type="video/mp4; codecs=hvc1">
+                    <source src="assets/video/longer%20alpha%20videos/2_pickles.webm" type="video/webm">
                 </video>
                 <video class="topping-video" data-topping="onion" autoplay loop muted playsinline preload="auto">
-                    <source src="assets/video/videos_alpha/3_onion_hevc.mov" type="video/mp4; codecs=hvc1">
-                    <source src="assets/video/videos_alpha/3_onion.webm" type="video/webm">
+                    <source src="assets/video/longer%20alpha%20videos/3_onion_hevc.mov" type="video/mp4; codecs=hvc1">
+                    <source src="assets/video/longer%20alpha%20videos/3_onion.webm" type="video/webm">
                 </video>
                 <video class="topping-video" data-topping="cheese" autoplay loop muted playsinline preload="auto">
-                    <source src="assets/video/videos_alpha/4_cheese_hevc.mov" type="video/mp4; codecs=hvc1">
-                    <source src="assets/video/videos_alpha/4_cheese.webm" type="video/webm">
+                    <source src="assets/video/longer%20alpha%20videos/4_cheese_hevc.mov" type="video/mp4; codecs=hvc1">
+                    <source src="assets/video/longer%20alpha%20videos/4_cheese.webm" type="video/webm">
                 </video>
                 <video class="topping-video" data-topping="patty" autoplay loop muted playsinline preload="auto">
-                    <source src="assets/video/videos_alpha/5_patty_hevc.mov" type="video/mp4; codecs=hvc1">
-                    <source src="assets/video/videos_alpha/5_patty.webm" type="video/webm">
+                    <source src="assets/video/longer%20alpha%20videos/5_patty_hevc.mov" type="video/mp4; codecs=hvc1">
+                    <source src="assets/video/longer%20alpha%20videos/5_patty.webm" type="video/webm">
                 </video>
                 <video class="topping-video" data-topping="pattyandcheese" autoplay loop muted playsinline preload="auto">
-                    <source src="assets/video/videos_alpha/5_1_pattyandcheese_hevc.mov" type="video/mp4; codecs=hvc1">
-                    <source src="assets/video/videos_alpha/5_1_pattyandcheese.webm" type="video/webm">
+                    <source src="assets/video/longer%20alpha%20videos/5.1_pattyandcheese_hevc.mov" type="video/mp4; codecs=hvc1">
+                    <source src="assets/video/longer%20alpha%20videos/5.1_pattyandcheese.webm" type="video/webm">
                 </video>
                 <video class="topping-video" data-topping="tomato" autoplay loop muted playsinline preload="auto">
-                    <source src="assets/video/videos_alpha/6_tomato_hevc.mov" type="video/mp4; codecs=hvc1">
-                    <source src="assets/video/videos_alpha/6_tomato.webm" type="video/webm">
+                    <source src="assets/video/longer%20alpha%20videos/6_tomato_hevc.mov" type="video/mp4; codecs=hvc1">
+                    <source src="assets/video/longer%20alpha%20videos/6_tomato.webm" type="video/webm">
                 </video>
                 <video class="topping-video" data-topping="lettuce" autoplay loop muted playsinline preload="auto">
-                    <source src="assets/video/videos_alpha/7_lettuce_hevc.mov" type="video/mp4; codecs=hvc1">
-                    <source src="assets/video/videos_alpha/7_lettuce.webm" type="video/webm">
+                    <source src="assets/video/longer%20alpha%20videos/7_lettuce_hevc.mov" type="video/mp4; codecs=hvc1">
+                    <source src="assets/video/longer%20alpha%20videos/7_lettuce.webm" type="video/webm">
                 </video>
                 <video class="topping-video" data-topping="bottom_bun" autoplay loop muted playsinline preload="auto">
-                    <source src="assets/video/videos_alpha/8_bottom_bun_hevc.mov" type="video/mp4; codecs=hvc1">
-                    <source src="assets/video/videos_alpha/8_bottom_bun.webm" type="video/webm">
+                    <source src="assets/video/longer%20alpha%20videos/8_bottom_bun_hevc.mov" type="video/mp4; codecs=hvc1">
+                    <source src="assets/video/longer%20alpha%20videos/8_bottom_bun.webm" type="video/webm">
                 </video>
             </div>
         </div>
@@ -250,44 +338,170 @@
         <div class="menu-builder-container-2">
             <!-- Left Side: Toppings Table -->
             <div class="toppings-table-2">
-                <h2 class="toppings-title-2">Build Your Burger</h2>
+                <div class="panel-navigation-2">
+                    <button class="nav-btn nav-back-2" disabled>&larr; Back</button>
+                    <h2 class="panel-title-2">Toppings</h2>
+                    <button class="nav-btn nav-next-2">Next &rarr;</button>
+                </div>
+
+                <!-- Toppings Panel -->
+                <div class="toppings-panel-2 active-panel">
+                <button class="select-all-btn-2" data-state="default">Select All</button>
                 <div class="toppings-list-2">
                     <label class="topping-item-2" data-topping-2="top_bun">
                         <input type="checkbox" checked>
+                        <img src="assets/image/topping selection /1_bun_selection.png" alt="Bun" class="topping-thumb-2">
                         <span class="topping-name-2">Top Bun</span>
                     </label>
                     <label class="topping-item-2" data-topping-2="pickles">
                         <input type="checkbox">
+                        <img src="assets/image/topping selection /2_pickles_selection.png" alt="Pickles" class="topping-thumb-2">
                         <span class="topping-name-2">Pickles</span>
                     </label>
                     <label class="topping-item-2" data-topping-2="onion">
                         <input type="checkbox">
+                        <img src="assets/image/topping selection /3_onion_selection.png" alt="Onion" class="topping-thumb-2">
                         <span class="topping-name-2">Onion</span>
                     </label>
                     <label class="topping-item-2" data-topping-2="bacon">
                         <input type="checkbox">
+                        <img src="assets/image/topping selection /4_bacon_selection.png" alt="Bacon" class="topping-thumb-2">
                         <span class="topping-name-2">Bacon</span>
                     </label>
                     <label class="topping-item-2" data-topping-2="cheese">
                         <input type="checkbox">
+                        <img src="assets/image/topping selection /5_cheese_selection.png" alt="Cheese" class="topping-thumb-2">
                         <span class="topping-name-2">Cheese</span>
                     </label>
                     <label class="topping-item-2" data-topping-2="patty">
                         <input type="checkbox" checked>
+                        <img src="assets/image/topping selection /6_patty_selection.png" alt="Patty" class="topping-thumb-2">
                         <span class="topping-name-2">Patty</span>
                     </label>
                     <label class="topping-item-2" data-topping-2="tomato">
                         <input type="checkbox">
+                        <img src="assets/image/topping selection /7_tomato_selection.png" alt="Tomato" class="topping-thumb-2">
                         <span class="topping-name-2">Tomato</span>
                     </label>
                     <label class="topping-item-2" data-topping-2="lettuce">
                         <input type="checkbox">
+                        <img src="assets/image/topping selection /8_lettuce_selection.png" alt="Lettuce" class="topping-thumb-2">
                         <span class="topping-name-2">Lettuce</span>
                     </label>
                     <label class="topping-item-2" data-topping-2="bottom_bun">
                         <input type="checkbox" checked>
+                        <img src="assets/image/topping selection /1_bun_selection.png" alt="Bun" class="topping-thumb-2">
                         <span class="topping-name-2">Bottom Bun</span>
                     </label>
+                </div>
+                </div>
+
+                <!-- Sauces Panel -->
+                <div class="sauces-panel-2">
+                <div class="sauces-list-2">
+                    <label class="topping-item-2" data-sauce-2="ketchup">
+                        <input type="checkbox">
+                        <img src="assets/image/sauce selection/1_ketchup_selection.png" alt="Ketchup" class="topping-thumb-2">
+                        <span class="topping-name-2">Ketchup</span>
+                    </label>
+                    <label class="topping-item-2" data-sauce-2="mustard">
+                        <input type="checkbox">
+                        <img src="assets/image/sauce selection/2_mustard_selection.png" alt="Mustard" class="topping-thumb-2">
+                        <span class="topping-name-2">Mustard</span>
+                    </label>
+                    <label class="topping-item-2" data-sauce-2="mayo">
+                        <input type="checkbox">
+                        <img src="assets/image/sauce selection/3_mayo_selection.png" alt="Mayo" class="topping-thumb-2">
+                        <span class="topping-name-2">Mayo</span>
+                    </label>
+                    <label class="topping-item-2" data-sauce-2="bbq">
+                        <input type="checkbox">
+                        <img src="assets/image/sauce selection/5_bbq_sauce_selection.png" alt="B.B.Q" class="topping-thumb-2">
+                        <span class="topping-name-2">B.B.Q</span>
+                    </label>
+                    <label class="topping-item-2" data-sauce-2="hot">
+                        <input type="checkbox">
+                        <img src="assets/image/sauce selection/4_spicy_selection.png" alt="HOT" class="topping-thumb-2">
+                        <span class="topping-name-2">HOT</span>
+                    </label>
+                    <label class="topping-item-2" data-sauce-2="special">
+                        <input type="checkbox">
+                        <img src="assets/image/sauce selection/6_50's-pecial_sauce_selection.png" alt="50's-pecial" class="topping-thumb-2">
+                        <span class="topping-name-2">50's-pecial</span>
+                    </label>
+                </div>
+                </div>
+
+                <!-- Sides Panel -->
+                <div class="sides-panel-2">
+                <div class="sides-list-2">
+                    <div class="side-item-2" data-side-2="fries">
+                        <input type="checkbox" id="side-fries-2" class="side-checkbox-2">
+                        <label for="side-fries-2" class="side-label-2">
+                            <img src="assets/image/sides section/golden_road_fries_color_99.png" alt="Golden Road Fries" class="side-thumb-2">
+                            <span class="side-name-2">Golden Road Fries</span>
+                        </label>
+                        <div class="size-selector-2">
+                            <label class="size-option-2"><input type="radio" name="size-fries-2" value="small"><span>S</span></label>
+                            <label class="size-option-2"><input type="radio" name="size-fries-2" value="medium" checked><span>M</span></label>
+                            <label class="size-option-2"><input type="radio" name="size-fries-2" value="large"><span>L</span></label>
+                        </div>
+                    </div>
+                    <div class="side-item-2" data-side-2="onion_rings">
+                        <input type="checkbox" id="side-onion-rings-2" class="side-checkbox-2">
+                        <label for="side-onion-rings-2" class="side-label-2">
+                            <img src="assets/image/sides section/onion_rings_transparent.png" alt="Onion Rings" class="side-thumb-2">
+                            <span class="side-name-2">Onion Rings</span>
+                        </label>
+                        <div class="size-selector-2">
+                            <label class="size-option-2"><input type="radio" name="size-onion-rings-2" value="small"><span>S</span></label>
+                            <label class="size-option-2"><input type="radio" name="size-onion-rings-2" value="medium" checked><span>M</span></label>
+                            <label class="size-option-2"><input type="radio" name="size-onion-rings-2" value="large"><span>L</span></label>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+                <!-- Drinks Panel -->
+                <div class="drinks-panel-2">
+                <div class="drinks-list-2">
+                    <div class="drink-item-2" data-drink-2="cola">
+                        <input type="checkbox" id="drink-cola-2" class="drink-checkbox-2">
+                        <label for="drink-cola-2" class="drink-label-2">
+                            <img src="assets/image/sides section/soda_edge_150.png" alt="Coca-Cola" class="drink-thumb-2">
+                            <span class="drink-name-2">Coca-Cola</span>
+                        </label>
+                        <div class="size-selector-2">
+                            <label class="size-option-2"><input type="radio" name="size-cola-2" value="small"><span>S</span></label>
+                            <label class="size-option-2"><input type="radio" name="size-cola-2" value="medium" checked><span>M</span></label>
+                            <label class="size-option-2"><input type="radio" name="size-cola-2" value="large"><span>L</span></label>
+                        </div>
+                    </div>
+                    <div class="drink-item-2" data-drink-2="sprite">
+                        <input type="checkbox" id="drink-sprite-2" class="drink-checkbox-2">
+                        <label for="drink-sprite-2" class="drink-label-2">
+                            <img src="assets/image/sides section/sprite_soda_transparent.png" alt="Sprite" class="drink-thumb-2">
+                            <span class="drink-name-2">Sprite</span>
+                        </label>
+                        <div class="size-selector-2">
+                            <label class="size-option-2"><input type="radio" name="size-sprite-2" value="small"><span>S</span></label>
+                            <label class="size-option-2"><input type="radio" name="size-sprite-2" value="medium" checked><span>M</span></label>
+                            <label class="size-option-2"><input type="radio" name="size-sprite-2" value="large"><span>L</span></label>
+                        </div>
+                    </div>
+                    <div class="drink-item-2" data-drink-2="fanta">
+                        <input type="checkbox" id="drink-fanta-2" class="drink-checkbox-2">
+                        <label for="drink-fanta-2" class="drink-label-2">
+                            <img src="assets/image/sides section/fanta_soda_transparent.png" alt="Fanta" class="drink-thumb-2">
+                            <span class="drink-name-2">Fanta</span>
+                        </label>
+                        <div class="size-selector-2">
+                            <label class="size-option-2"><input type="radio" name="size-fanta-2" value="small"><span>S</span></label>
+                            <label class="size-option-2"><input type="radio" name="size-fanta-2" value="medium" checked><span>M</span></label>
+                            <label class="size-option-2"><input type="radio" name="size-fanta-2" value="large"><span>L</span></label>
+                        </div>
+                    </div>
+                </div>
                 </div>
             </div>
 
@@ -307,6 +521,6 @@
         </div>
     </section>
 
-    <script src="js/main.js?v=1262"></script>
+    <script src="js/main.js?v=1266"></script>
 </body>
 </html>

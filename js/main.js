@@ -10,7 +10,9 @@ document.addEventListener('DOMContentLoaded', function() {
     initHeroScroll();
     initCommercialSection();
     initPanelNavigation();
+    initPanelNavigation2();
     initMenuParallax();
+    initMainNavigation();
 });
 
 /* ========================================
@@ -97,15 +99,60 @@ function initHeroScroll() {
 
 function initMenuBuilder() {
     var toppingItems = document.querySelectorAll('.topping-item');
+    var selectAllBtn = document.querySelector('.select-all-btn');
 
     toppingItems.forEach(function(item) {
         var checkbox = item.querySelector('input[type="checkbox"]');
 
         checkbox.addEventListener('change', function() {
             updateToppingVideos();
+            // Update button state based on current selection
+            updateSelectAllButtonState();
         });
     });
 
+    // Select All button functionality
+    if (selectAllBtn) {
+        selectAllBtn.addEventListener('click', function() {
+            var currentState = selectAllBtn.getAttribute('data-state');
+
+            if (currentState === 'default') {
+                // Select all toppings
+                toppingItems.forEach(function(item) {
+                    var checkbox = item.querySelector('input[type="checkbox"]');
+                    checkbox.checked = true;
+                });
+                selectAllBtn.setAttribute('data-state', 'all');
+                selectAllBtn.textContent = 'Default';
+            } else {
+                // Reset to default (top bun, patty, bottom bun)
+                toppingItems.forEach(function(item) {
+                    var checkbox = item.querySelector('input[type="checkbox"]');
+                    var topping = item.getAttribute('data-topping');
+                    checkbox.checked = (topping === 'top_bun' || topping === 'patty' || topping === 'bottom_bun');
+                });
+                selectAllBtn.setAttribute('data-state', 'default');
+                selectAllBtn.textContent = 'Select All';
+            }
+            updateToppingVideos();
+        });
+    }
+
+    function updateSelectAllButtonState() {
+        if (!selectAllBtn) return;
+        var allChecked = true;
+        toppingItems.forEach(function(item) {
+            var checkbox = item.querySelector('input[type="checkbox"]');
+            if (!checkbox.checked) allChecked = false;
+        });
+        if (allChecked) {
+            selectAllBtn.setAttribute('data-state', 'all');
+            selectAllBtn.textContent = 'Default';
+        } else {
+            selectAllBtn.setAttribute('data-state', 'default');
+            selectAllBtn.textContent = 'Select All';
+        }
+    }
 
     updateToppingVideos();
 }
@@ -238,15 +285,61 @@ function updateToppingVideos() {
    ======================================== */
 
 function initMenuBuilder2() {
-    var toppingItems = document.querySelectorAll('.topping-item-2');
+    var toppingItems = document.querySelectorAll('.topping-item-2[data-topping-2]');
+    var selectAllBtn = document.querySelector('.select-all-btn-2');
 
     toppingItems.forEach(function(item) {
         var checkbox = item.querySelector('input[type="checkbox"]');
 
         checkbox.addEventListener('change', function() {
             updateToppingImages();
+            // Update button state based on current selection
+            updateSelectAllButtonState2();
         });
     });
+
+    // Select All button functionality
+    if (selectAllBtn) {
+        selectAllBtn.addEventListener('click', function() {
+            var currentState = selectAllBtn.getAttribute('data-state');
+
+            if (currentState === 'default') {
+                // Select all toppings
+                toppingItems.forEach(function(item) {
+                    var checkbox = item.querySelector('input[type="checkbox"]');
+                    checkbox.checked = true;
+                });
+                selectAllBtn.setAttribute('data-state', 'all');
+                selectAllBtn.textContent = 'Default';
+            } else {
+                // Reset to default (top bun, patty, bottom bun)
+                toppingItems.forEach(function(item) {
+                    var checkbox = item.querySelector('input[type="checkbox"]');
+                    var topping = item.getAttribute('data-topping-2');
+                    checkbox.checked = (topping === 'top_bun' || topping === 'patty' || topping === 'bottom_bun');
+                });
+                selectAllBtn.setAttribute('data-state', 'default');
+                selectAllBtn.textContent = 'Select All';
+            }
+            updateToppingImages();
+        });
+    }
+
+    function updateSelectAllButtonState2() {
+        if (!selectAllBtn) return;
+        var allChecked = true;
+        toppingItems.forEach(function(item) {
+            var checkbox = item.querySelector('input[type="checkbox"]');
+            if (!checkbox.checked) allChecked = false;
+        });
+        if (allChecked) {
+            selectAllBtn.setAttribute('data-state', 'all');
+            selectAllBtn.textContent = 'Default';
+        } else {
+            selectAllBtn.setAttribute('data-state', 'default');
+            selectAllBtn.textContent = 'Select All';
+        }
+    }
 
     updateToppingImages();
 }
@@ -480,25 +573,96 @@ function initPanelNavigation() {
     var panelTitle = toppingsTable.querySelector('.panel-title');
     var toppingsPanel = toppingsTable.querySelector('.toppings-panel');
     var saucesPanel = toppingsTable.querySelector('.sauces-panel');
+    var sidesPanel = toppingsTable.querySelector('.sides-panel');
+    var drinksPanel = toppingsTable.querySelector('.drinks-panel');
 
-    if (!backBtn || !nextBtn || !toppingsPanel || !saucesPanel) return;
+    if (!backBtn || !nextBtn || !toppingsPanel || !saucesPanel || !sidesPanel || !drinksPanel) return;
 
-    // Next button - go to sauces
+    var panels = [
+        { panel: toppingsPanel, title: 'Toppings' },
+        { panel: saucesPanel, title: 'Sauces' },
+        { panel: sidesPanel, title: 'Sides' },
+        { panel: drinksPanel, title: 'Drinks' }
+    ];
+    var currentIndex = 0;
+
+    function updatePanel(index) {
+        panels.forEach(function(p, i) {
+            if (i === index) {
+                p.panel.classList.add('active-panel');
+            } else {
+                p.panel.classList.remove('active-panel');
+            }
+        });
+        panelTitle.textContent = panels[index].title;
+        backBtn.disabled = (index === 0);
+        nextBtn.disabled = (index === panels.length - 1);
+        currentIndex = index;
+    }
+
     nextBtn.addEventListener('click', function() {
-        toppingsPanel.classList.remove('active-panel');
-        saucesPanel.classList.add('active-panel');
-        panelTitle.textContent = 'Sauces';
-        backBtn.disabled = false;
-        nextBtn.disabled = true;
+        if (currentIndex < panels.length - 1) {
+            updatePanel(currentIndex + 1);
+        }
     });
 
-    // Back button - go to toppings
     backBtn.addEventListener('click', function() {
-        saucesPanel.classList.remove('active-panel');
-        toppingsPanel.classList.add('active-panel');
-        panelTitle.textContent = 'Toppings';
-        backBtn.disabled = true;
-        nextBtn.disabled = false;
+        if (currentIndex > 0) {
+            updatePanel(currentIndex - 1);
+        }
+    });
+}
+
+/* ========================================
+   PANEL NAVIGATION METHOD 2 (Toppings/Sauces)
+   ======================================== */
+
+function initPanelNavigation2() {
+    var toppingsTable = document.querySelector('.toppings-table-2');
+    if (!toppingsTable) return;
+
+    var backBtn = toppingsTable.querySelector('.nav-back-2');
+    var nextBtn = toppingsTable.querySelector('.nav-next-2');
+    var panelTitle = toppingsTable.querySelector('.panel-title-2');
+    var toppingsPanel = toppingsTable.querySelector('.toppings-panel-2');
+    var saucesPanel = toppingsTable.querySelector('.sauces-panel-2');
+    var sidesPanel = toppingsTable.querySelector('.sides-panel-2');
+    var drinksPanel = toppingsTable.querySelector('.drinks-panel-2');
+
+    if (!backBtn || !nextBtn || !toppingsPanel || !saucesPanel || !sidesPanel || !drinksPanel) return;
+
+    var panels = [
+        { panel: toppingsPanel, title: 'Toppings' },
+        { panel: saucesPanel, title: 'Sauces' },
+        { panel: sidesPanel, title: 'Sides' },
+        { panel: drinksPanel, title: 'Drinks' }
+    ];
+    var currentIndex = 0;
+
+    function updatePanel(index) {
+        panels.forEach(function(p, i) {
+            if (i === index) {
+                p.panel.classList.add('active-panel');
+            } else {
+                p.panel.classList.remove('active-panel');
+            }
+        });
+        panelTitle.textContent = panels[index].title;
+        backBtn.disabled = (index === 0);
+        nextBtn.disabled = (index === panels.length - 1);
+        currentIndex = index;
+    }
+
+    nextBtn.addEventListener('click', function() {
+        if (currentIndex < panels.length - 1) {
+            updatePanel(currentIndex + 1);
+        }
+    });
+
+    backBtn.addEventListener('click', function() {
+        if (currentIndex > 0) {
+            updatePanel(currentIndex - 1);
+        }
     });
 }
 
@@ -516,6 +680,54 @@ function initMenuParallax() {
 
         item.addEventListener('mouseleave', function() {
             item.classList.remove('parallax-hover');
+        });
+    });
+}
+
+/* ========================================
+   MAIN NAVIGATION
+   ======================================== */
+
+function initMainNavigation() {
+    var navLinks = document.querySelectorAll('.main-nav a[data-nav]');
+    var viewportHeight = window.innerHeight;
+
+    navLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            var navType = link.getAttribute('data-nav');
+
+            switch(navType) {
+                case 'home':
+                    // Instant scroll to top
+                    window.scrollTo({ top: 0, behavior: 'instant' });
+                    break;
+
+                case 'burgers':
+                case 'sides':
+                case 'drinks':
+                    // Scroll to hero menu section (where menu panels are fully visible)
+                    // This is at approximately 200vh scroll position
+                    window.scrollTo({ top: viewportHeight * 2, behavior: 'instant' });
+                    break;
+
+                case 'custom':
+                    // Scroll to menu builder section
+                    var menuBuilder = document.getElementById('menu-builder');
+                    if (menuBuilder) {
+                        var offsetTop = menuBuilder.offsetTop;
+                        window.scrollTo({ top: offsetTop, behavior: 'instant' });
+                    }
+                    break;
+
+                case 'about':
+                    // Placeholder - does nothing for now
+                    break;
+
+                case 'menu':
+                    // Main menu link - does nothing, dropdown handles navigation
+                    break;
+            }
         });
     });
 }

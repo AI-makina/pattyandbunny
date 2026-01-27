@@ -33,6 +33,76 @@ img {
    ≥1200px
    ======================================== */
 
+/* --- Navigation Bar --- */
+.main-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    padding: 30px 40px;
+    z-index: 100;
+}
+
+.nav-link {
+    color: #E4D3B0;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+    color: #fff;
+}
+
+.dropdown-arrow {
+    font-size: 0.7rem;
+    margin-left: 4px;
+}
+
+.nav-dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.85);
+    min-width: 150px;
+    border-radius: 8px;
+    padding: 10px 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    margin-top: 10px;
+}
+
+.nav-dropdown:hover .dropdown-content {
+    opacity: 1;
+    visibility: visible;
+}
+
+.dropdown-content a {
+    display: block;
+    color: #E4D3B0;
+    text-decoration: none;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.dropdown-content a:hover {
+    background-color: rgba(228, 211, 176, 0.15);
+    color: #fff;
+}
+
 /* --- Hero Section --- */
 .hero-section-wrapper {
     position: relative;
@@ -410,6 +480,35 @@ img {
     text-align: center;
 }
 
+/* --- Select All Button --- */
+.select-all-btn {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    margin-bottom: 15px;
+    background-color: #c41e3a;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.select-all-btn:hover {
+    background-color: #a01830;
+    transform: scale(1.02);
+}
+
+.select-all-btn[data-state="all"] {
+    background-color: #333;
+}
+
+.select-all-btn[data-state="all"]:hover {
+    background-color: #555;
+}
+
 .toppings-list {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -493,14 +592,18 @@ img {
     cursor: not-allowed;
 }
 
-/* --- Toppings/Sauces Panels --- */
+/* --- Toppings/Sauces/Sides/Drinks Panels --- */
 .toppings-panel,
-.sauces-panel {
+.sauces-panel,
+.sides-panel,
+.drinks-panel {
     display: none;
 }
 
 .toppings-panel.active-panel,
-.sauces-panel.active-panel {
+.sauces-panel.active-panel,
+.sides-panel.active-panel,
+.drinks-panel.active-panel {
     display: block;
 }
 
@@ -508,6 +611,163 @@ img {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px;
+}
+
+/* --- Sides Panel --- */
+.sides-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.side-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 20px;
+    background-color: #fef9f3;
+    border-radius: 10px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.side-item:hover {
+    background-color: #fdeee8;
+    transform: scale(1.02);
+}
+
+.side-checkbox {
+    width: 24px;
+    height: 24px;
+    accent-color: #c41e3a;
+    cursor: pointer;
+}
+
+.side-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.side-thumb {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.side-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+}
+
+/* --- Drinks Panel --- */
+.drinks-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+}
+
+.drink-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    background-color: #fef9f3;
+    border-radius: 10px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.drink-item:hover {
+    background-color: #fdeee8;
+    transform: scale(1.02);
+}
+
+.drink-checkbox {
+    width: 24px;
+    height: 24px;
+    accent-color: #c41e3a;
+    cursor: pointer;
+}
+
+.drink-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.drink-thumb {
+    width: 100%;
+    max-width: 120px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.drink-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+}
+
+/* --- Size Selector --- */
+.size-selector {
+    display: none;
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.side-checkbox:checked ~ .size-selector,
+.drink-checkbox:checked ~ .size-selector {
+    display: flex;
+}
+
+.size-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.size-option input[type="radio"] {
+    display: none;
+}
+
+.size-option span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 2px solid #c41e3a;
+    border-radius: 50%;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #c41e3a;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.size-option input[type="radio"]:checked + span {
+    background-color: #c41e3a;
+    color: #fff;
+}
+
+.size-option:hover span {
+    background-color: #fdeee8;
+}
+
+.size-option input[type="radio"]:checked + span:hover {
+    background-color: #a01830;
 }
 
 /* --- Video Stack --- */
@@ -561,25 +821,236 @@ img {
 
 /* --- Toppings Table Method 2 --- */
 .toppings-table-2 {
-    flex: 0 0 35%;
+    flex: 0 0 50%;
     background-color: #fff;
     border-radius: 16px;
     padding: 40px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
-.toppings-title-2 {
-    font-size: 2rem;
+/* --- Panel Navigation Method 2 --- */
+.panel-navigation-2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #fef9f3;
+}
+
+.panel-title-2 {
+    font-size: 1.5rem;
     font-weight: 700;
     color: #c41e3a;
-    margin-bottom: 30px;
+    margin: 0;
+}
+
+/* --- Toppings/Sauces/Sides/Drinks Panels Method 2 --- */
+.toppings-panel-2,
+.sauces-panel-2,
+.sides-panel-2,
+.drinks-panel-2 {
+    display: none;
+}
+
+.toppings-panel-2.active-panel,
+.sauces-panel-2.active-panel,
+.sides-panel-2.active-panel,
+.drinks-panel-2.active-panel {
+    display: block;
+}
+
+/* --- Select All Button Method 2 --- */
+.select-all-btn-2 {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    margin-bottom: 15px;
+    background-color: #c41e3a;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.select-all-btn-2:hover {
+    background-color: #a01830;
+    transform: scale(1.02);
+}
+
+.select-all-btn-2[data-state="all"] {
+    background-color: #333;
+}
+
+.select-all-btn-2[data-state="all"]:hover {
+    background-color: #555;
+}
+
+.toppings-list-2,
+.sauces-list-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+/* --- Sides Panel Method 2 --- */
+.sides-list-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.side-item-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 20px;
+    background-color: #fef9f3;
+    border-radius: 10px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.side-item-2:hover {
+    background-color: #fdeee8;
+    transform: scale(1.02);
+}
+
+.side-checkbox-2 {
+    width: 24px;
+    height: 24px;
+    accent-color: #c41e3a;
+    cursor: pointer;
+}
+
+.side-label-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.side-thumb-2 {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.side-name-2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
     text-align: center;
 }
 
-.toppings-list-2 {
+/* --- Drinks Panel Method 2 --- */
+.drinks-list-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+}
+
+.drink-item-2 {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    background-color: #fef9f3;
+    border-radius: 10px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.drink-item-2:hover {
+    background-color: #fdeee8;
+    transform: scale(1.02);
+}
+
+.drink-checkbox-2 {
+    width: 24px;
+    height: 24px;
+    accent-color: #c41e3a;
+    cursor: pointer;
+}
+
+.drink-thumb-2 {
+    width: 100%;
+    max-width: 120px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.drink-label-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.drink-name-2 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+}
+
+/* --- Size Selector Method 2 --- */
+.size-selector-2 {
+    display: none;
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.side-checkbox-2:checked ~ .size-selector-2,
+.drink-checkbox-2:checked ~ .size-selector-2 {
+    display: flex;
+}
+
+.size-option-2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.size-option-2 input[type="radio"] {
+    display: none;
+}
+
+.size-option-2 span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 2px solid #c41e3a;
+    border-radius: 50%;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #c41e3a;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.size-option-2 input[type="radio"]:checked + span {
+    background-color: #c41e3a;
+    color: #fff;
+}
+
+.size-option-2:hover span {
+    background-color: #fdeee8;
+}
+
+.size-option-2 input[type="radio"]:checked + span:hover {
+    background-color: #a01830;
 }
 
 .topping-item-2 {
@@ -605,10 +1076,19 @@ img {
     cursor: pointer;
 }
 
+.topping-thumb-2 {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
 .topping-name-2 {
     font-size: 1.1rem;
     font-weight: 500;
     color: #333;
+    white-space: nowrap;
 }
 
 /* --- Image Stack Method 2 --- */
