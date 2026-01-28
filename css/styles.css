@@ -1666,6 +1666,118 @@ img {
    ======================================== */
 @media screen and (max-height: 500px) {
     /* Mobile Landscape specific styles */
+
+    /* Fix horizontal overflow */
+    .hero-section-wrapper,
+    .hero-section,
+    .menu-builder-section,
+    .menu-builder-section-2,
+    .commercial-section,
+    .contact-section {
+        max-width: 100vw !important;
+        overflow-x: clip !important;
+    }
+
+    /* Hamburger Menu - Show on mobile landscape */
+    .hamburger-btn {
+        display: block !important;
+    }
+
+    .nav-links {
+        display: none !important;
+    }
+
+    .mobile-menu-overlay {
+        display: block !important;
+    }
+
+    /* Reduce logo size by 25% (150px * 0.75 = 112px) */
+    .logo {
+        width: 112px !important;
+    }
+
+    /* Extend hero section for sequential menu animation */
+    .hero-section-wrapper {
+        height: 550vh !important;
+    }
+
+    /* Center menus for landscape display */
+    .hero-menu-left,
+    .hero-menu-right {
+        transform: translateY(-50%) scale(0.7) !important;
+    }
+
+    /* Reset right positioning (JS controls left position) */
+    .hero-menu-right {
+        right: auto !important;
+    }
+
+    /* Move burger heading 100px to the left */
+    .hero-menu-left .menu-title {
+        margin-left: -100px !important;
+    }
+
+    /* Reduce window padding to expand grid and fit text */
+    .toppings-table,
+    .toppings-table-2 {
+        padding: 10px !important;
+    }
+
+    .topping-item,
+    .topping-item-2 {
+        padding: 12px 10px !important;
+        gap: 10px !important;
+    }
+
+    .topping-name,
+    .topping-name-2 {
+        font-size: 0.9rem !important;
+    }
+
+    /* Move Method 1 and Method 2 burgers 250px to the left */
+    .video-stack-container {
+        margin-left: -250px !important;
+    }
+
+    .image-stack-container {
+        margin-left: 0px !important;
+        margin-top: -345px !important;
+        transform: scale(1.14) !important;
+    }
+
+    /* Center Build Your Burger heading */
+    .section-heading {
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    /* Method 2 section - 25px taller, allow vertical overflow for expanded burger */
+    .menu-builder-section-2 {
+        min-height: calc(100vh + 25px) !important;
+        overflow: visible !important;
+    }
+
+    /* Contact Section - Logo in bottom right corner */
+    .contact-section {
+        position: relative !important;
+        margin-top: 0px !important;
+    }
+
+    .contact-container {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+
+    .contact-logo {
+        position: absolute !important;
+        bottom: 30px !important;
+        right: 30px !important;
+        flex: none !important;
+    }
+
+    .contact-logo img {
+        max-width: 150px !important;
+    }
 }
 
 /* ========================================

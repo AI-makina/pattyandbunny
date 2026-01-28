@@ -55,11 +55,16 @@ function initHeroScroll() {
         var phase3End = viewportHeight * 2.0;
         var phase3Progress = scrollY > phase3Start ? Math.min((scrollY - phase3Start) / (phase3End - phase3Start), 1) : 0;
 
-        // Phase 1: Video shifts up (300px desktop, 215px tablet portrait)
+        // Phase 1: Video shifts up (300px desktop, 215px tablet portrait, 150px mobile landscape)
         var isTabletPortrait = window.innerWidth >= 768 && window.innerWidth <= 990 && window.innerHeight > 500;
-        var videoShiftAmount = isTabletPortrait ? 215 : 300;
+        var isMobileLandscape = window.innerHeight <= 500;
+
+        var videoShiftAmount = isTabletPortrait ? 215 : (isMobileLandscape ? 150 : 300);
         var videoMoveUp = phase1Progress * videoShiftAmount;
-        var headingMoveUp = phase1Progress * 30;
+
+        // Heading shifts up by default, but DOWN for mobile landscape
+        var headingShiftAmount = isMobileLandscape ? -30 : 30;
+        var headingMoveUp = phase1Progress * headingShiftAmount;
 
         // Video fades in from 0% to 100% over first 50px of shift
         var fadeEndPx = 50;
@@ -143,6 +148,82 @@ function initHeroScroll() {
                 menuRight.style.right = 'auto';
                 menuRight.style.opacity = sidesInProgress;
 
+            } else if (isMobileLandscape) {
+                // MOBILE LANDSCAPE: Sequential menu with vertical shift up
+                // Phase 3: Burgers sweep in from left to center
+                // Phase 4: Burgers hold at center
+                // Phase 5: Burgers shift UP (parallax out of view)
+                // When 75% shifted up, sides start sweeping in
+                // Phase 6: Sides sweep in from left to center
+                // Phase 7: Sides hold at center
+                // Phase 8: Sides shift UP
+
+                var holdDistance = 100; // 100px hold
+                var sweepDistance = viewportHeight * 0.8; // Sweep distance
+                var shiftUpDistance = viewportHeight * 0.8; // Distance to shift up
+
+                // Phase 3: Burgers sweep in (100vh to 180vh)
+                var burgersInStart = viewportHeight;
+                var burgersInEnd = burgersInStart + sweepDistance;
+                var burgersInProgress = scrollY > burgersInStart ? Math.min((scrollY - burgersInStart) / (burgersInEnd - burgersInStart), 1) : 0;
+
+                // Phase 4: Burgers hold (after sweep in, hold for 100px)
+                var burgersHoldStart = burgersInEnd;
+                var burgersHoldEnd = burgersHoldStart + holdDistance;
+
+                // Phase 5: Burgers shift UP
+                var burgersShiftStart = burgersHoldEnd;
+                var burgersShiftEnd = burgersShiftStart + shiftUpDistance;
+                var burgersShiftProgress = scrollY > burgersShiftStart ? Math.min((scrollY - burgersShiftStart) / (burgersShiftEnd - burgersShiftStart), 1) : 0;
+
+                // Sides start entering after burgers are fully out of view
+                var sidesInStart = burgersShiftEnd;
+                var sidesInEnd = sidesInStart + sweepDistance;
+                var sidesInProgress = scrollY > sidesInStart ? Math.min((scrollY - sidesInStart) / (sidesInEnd - sidesInStart), 1) : 0;
+
+                // Phase 7: Sides hold
+                var sidesHoldStart = sidesInEnd;
+                var sidesHoldEnd = sidesHoldStart + holdDistance;
+
+                // Phase 8: Sides shift UP
+                var sidesShiftStart = sidesHoldEnd;
+                var sidesShiftEnd = sidesShiftStart + shiftUpDistance;
+                var sidesShiftProgress = scrollY > sidesShiftStart ? Math.min((scrollY - sidesShiftStart) / (sidesShiftEnd - sidesShiftStart), 1) : 0;
+
+                // Eased progress for smoother animation
+                var easeIn = 1 - Math.pow(1 - burgersInProgress, 3);
+                var easeShiftUp = 1 - Math.pow(1 - burgersShiftProgress, 3);
+                var easeSidesIn = 1 - Math.pow(1 - sidesInProgress, 3);
+                var easeSidesShiftUp = 1 - Math.pow(1 - sidesShiftProgress, 3);
+
+                // Burgers horizontal position: -50% (off left) to center (2%)
+                var burgersCenter = 2;
+                var burgersPosition = -50 + ((burgersCenter + 50) * easeIn); // -50% to 2%
+                menuLeft.style.left = burgersPosition + '%';
+                menuLeft.style.right = 'auto';
+
+                // Burgers vertical position: start at 100%
+                // Then shift up completely out of view (200% to clear viewport)
+                var burgersBaseTop = 100;
+                var burgersVerticalShift = easeShiftUp * 180; // 0 to 180% (exits top of viewport)
+                menuLeft.style.top = 'calc(' + burgersBaseTop + '% - ' + burgersVerticalShift + '%)';
+
+                // Burgers opacity: fade in during sweep, stay visible during shift
+                menuLeft.style.opacity = burgersInProgress;
+
+                // Sides horizontal position: -50% (off left) to center (20%)
+                var sidesCenter = 20;
+                var sidesPosition = -50 + ((sidesCenter + 50) * easeSidesIn); // -50% to 20%
+                menuRight.style.left = sidesPosition + '%';
+                menuRight.style.right = 'auto';
+
+                // Sides vertical position: 130px lower, then shift up
+                var sidesVerticalShift = easeSidesShiftUp * 100;
+                menuRight.style.top = 'calc(50% + 130px - ' + sidesVerticalShift + '%)';
+
+                // Sides opacity
+                menuRight.style.opacity = sidesInProgress;
+
             } else {
                 // DESKTOP/TABLET LANDSCAPE: Original side-by-side animation
                 var easeOut = 1 - Math.pow(1 - phase3Progress, 3);
@@ -166,6 +247,11 @@ function initHeroScroll() {
                 // For tablet portrait, use burgers in progress
                 var burgersInStart = viewportHeight;
                 var burgersInEnd = viewportHeight * 2;
+                overlayProgress = scrollY > burgersInStart ? Math.min((scrollY - burgersInStart) / (burgersInEnd - burgersInStart), 1) : 0;
+            } else if (isMobileLandscape) {
+                // For mobile landscape, use burgers in progress
+                var burgersInStart = viewportHeight;
+                var burgersInEnd = burgersInStart + (viewportHeight * 0.8);
                 overlayProgress = scrollY > burgersInStart ? Math.min((scrollY - burgersInStart) / (burgersInEnd - burgersInStart), 1) : 0;
             } else {
                 overlayProgress = phase3Progress;
@@ -982,20 +1068,41 @@ function initMobileMenu() {
             document.body.style.overflow = '';
             if (mobileDropdown) mobileDropdown.classList.remove('active');
 
-            // Check if tablet portrait mode
+            // Check viewport mode
             var isTabletPortrait = window.innerWidth <= 990 && window.innerWidth >= 768 && window.innerHeight > 500;
+            var isMobileLandscape = window.innerHeight <= 500;
 
             // Navigate
             switch(navType) {
                 case 'burgers':
-                    // Burgers section - same for all viewports
-                    window.scrollTo({ top: viewportHeight * 2, behavior: 'instant' });
+                    if (isMobileLandscape) {
+                        // Mobile landscape - burgers hold position
+                        var holdDistance = 100;
+                        var sweepDistance = viewportHeight * 0.8;
+                        var burgersInEnd = viewportHeight + sweepDistance;
+                        var burgersHoldStart = burgersInEnd;
+                        window.scrollTo({ top: burgersHoldStart, behavior: 'instant' });
+                    } else {
+                        // Desktop/tablet - same position
+                        window.scrollTo({ top: viewportHeight * 2, behavior: 'instant' });
+                    }
                     break;
                 case 'sides':
                 case 'drinks':
-                    if (isTabletPortrait) {
+                    if (isMobileLandscape) {
+                        // Mobile landscape - sides appear after burgers fully exit
+                        var holdDistance = 100;
+                        var sweepDistance = viewportHeight * 0.8;
+                        var shiftUpDistance = viewportHeight * 0.8;
+                        var burgersInEnd = viewportHeight + sweepDistance;
+                        var burgersHoldEnd = burgersInEnd + holdDistance;
+                        var burgersShiftEnd = burgersHoldEnd + shiftUpDistance;
+                        var sidesInStart = burgersShiftEnd;
+                        var sidesInEnd = sidesInStart + sweepDistance;
+                        var sidesHoldStart = sidesInEnd + holdDistance;
+                        window.scrollTo({ top: sidesHoldStart, behavior: 'instant' });
+                    } else if (isTabletPortrait) {
                         // In tablet portrait, sides appear after burgers exit
-                        // Sides hold position is around 350vh (after burgers exit + sides sweep in)
                         var holdDistance = 100;
                         var sweepDistance = viewportHeight;
                         var burgersHoldEnd = (viewportHeight * 2) + holdDistance;
