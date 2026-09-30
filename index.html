@@ -139,7 +139,9 @@
          ======================================== -->
     <section class="commercial-section">
         <div class="commercial-container">
-            <video class="commercial-video" muted playsinline preload="auto">
+            <!-- preload="none": initCommercialSection starts it on scroll, so it shouldn't compete with the hero at page load;
+                 width/height keep the section's height while no video data has loaded -->
+            <video class="commercial-video" muted playsinline preload="none" width="1920" height="812">
                 <!-- H.264 first: every iPhone plays it (functions/assets/video serves it in the byte ranges iOS needs) -->
                 <source src="assets/video/burger_commercial2_tablet.mp4" type="video/mp4">
                 <source src="https://f004.backblazeb2.com/file/carrero-biz/Skyfynd%20Landing%20Page/Websites/Patty%26Bunny/video/burger_commercial2.webm" type="video/webm">
