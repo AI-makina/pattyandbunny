@@ -1001,7 +1001,6 @@ function initCommercialSection() {
     if (!section || !video || !image) return;
 
     var hasPlayed = false;
-    var isOutOfView = true;
     var videoEnded = false;
 
     // When video ends, show image instantly
@@ -1010,38 +1009,32 @@ function initCommercialSection() {
         image.classList.add('visible');
     });
 
-    // Create observer for 15% visibility (to start playing)
-    var playObserver = new IntersectionObserver(function(entries) {
+    // One observer for both thresholds. With separate 0% and 15% observers, a
+    // fast scroll that crossed both in one frame could deliver the 15% callback
+    // before the 0% one, and Safari then never started the video.
+    var observer = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
-            if (entry.isIntersecting && !hasPlayed && isOutOfView === false) {
+            if (!entry.isIntersecting) {
+                // Completely out of view - reset for next time
+                hasPlayed = false;
+                video.pause();
+                video.currentTime = 0;
+            } else if (entry.intersectionRatio >= 0.15 && !hasPlayed) {
                 // 15% visible and hasn't played yet this cycle
                 video.currentTime = 0;
-                video.play().catch(function(e) { console.log('Commercial video play error:', e); });
+                video.play().catch(function(e) {
+                    console.log('Commercial video play error:', e);
+                    // Autoplay blocked (e.g. iPhone Low Power Mode): show the still instead
+                    image.classList.add('visible');
+                });
                 hasPlayed = true;
                 videoEnded = false;
                 image.classList.remove('visible');
             }
         });
-    }, { threshold: 0.15 });
+    }, { threshold: [0, 0.15] });
 
-    // Create observer for 0% visibility (to reset)
-    var resetObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-            if (!entry.isIntersecting) {
-                // Completely out of view - reset for next time
-                isOutOfView = true;
-                hasPlayed = false;
-                video.pause();
-                video.currentTime = 0;
-            } else {
-                // At least partially visible
-                isOutOfView = false;
-            }
-        });
-    }, { threshold: 0 });
-
-    playObserver.observe(section);
-    resetObserver.observe(section);
+    observer.observe(section);
 
     // Handle fade out when scrolling past
     window.addEventListener('scroll', function() {
