@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initMenuBuilder();
     initMenuBuilder2();
     initHeroScroll();
+    initHeroMenuFit();
     initCommercialSection();
     initPanelNavigation();
     initPanelNavigation2();
@@ -339,6 +340,123 @@ function initHeroScroll() {
             heroOverlay.style.backgroundColor = 'rgba(0, 0, 0, ' + overlayOpacity + ')';
         }
     });
+}
+
+/* ========================================
+   HERO MENU FIT (desktop / tablet landscape)
+   ======================================== */
+
+// The menu panels are sized in fixed pixels (the Burgers column is ~940px tall),
+// but the sticky hero is one viewport tall and clips whatever falls below it.
+// Keep the designed 22% top when the menus fit; otherwise slide them up under
+// the header, and only then scale both panels down together until they fit.
+// Writes --hero-menu-top / --hero-menu-scale, which styles.css applies.
+function initHeroMenuFit() {
+    var hero = document.querySelector('.hero-section');
+    var nav = document.querySelector('.main-nav');
+    var logo = document.querySelector('.hero-section .logo');
+    var menuLeft = document.querySelector('.hero-menu-left');
+    var menuRight = document.querySelector('.hero-menu-right');
+    if (!hero || !menuLeft || !menuRight) return;
+
+    var menuImages = hero.querySelectorAll('.hero-menu-left img, .hero-menu-right img');
+
+    var designTop = 0.22;  // panel top when everything fits (fraction of hero height)
+    var sideInset = 0.07;  // where initHeroScroll parks each panel (fraction of hero width)
+    var headerGap = 15;    // px between the nav bar and the menu titles
+    var logoGap = 15;      // px between the logo and the Burgers items under it
+    var bottomGap = 30;    // px between the last ADD button and the bottom edge
+    var centerGap = 40;    // px between the Burgers and Sides columns
+
+    // Every visible piece of a panel (titles, food shots, ADD buttons), relative
+    // to the panel's top-left corner, with all CSS transforms applied
+    function measurePieces(panel) {
+        var box = panel.getBoundingClientRect();
+        var pieces = [];
+        panel.querySelectorAll('img, button').forEach(function(el) {
+            var r = el.getBoundingClientRect();
+            if (r.width && r.height) {
+                pieces.push({ top: r.top - box.top, bottom: r.bottom - box.top, left: r.left - box.left, right: r.right - box.left });
+            }
+        });
+        return { width: box.width, pieces: pieces };
+    }
+
+    function fit() {
+        // Measure the designed layout; the fitted values are written back in
+        // the same task, so the reset is never painted
+        hero.style.removeProperty('--hero-menu-top');
+        hero.style.removeProperty('--hero-menu-scale');
+
+        // Same breakpoints as the desktop / tablet-landscape branch of initHeroScroll
+        if (window.innerWidth < 991 || window.innerHeight <= 500) return;
+
+        // An image that hasn't loaded has no height yet; each one refits when it lands
+        for (var i = 0; i < menuImages.length; i++) {
+            if (!menuImages[i].complete) return;
+        }
+
+        // The desktop branch never animates top, so clear any inline top the
+        // mobile branches left behind before the window was resized
+        menuLeft.style.top = '';
+        menuRight.style.top = '';
+
+        var heroBox = hero.getBoundingClientRect();
+        var left = measurePieces(menuLeft);
+        var right = measurePieces(menuRight);
+        if (!left.pieces.length || !right.pieces.length) return;
+        var all = left.pieces.concat(right.pieces);
+
+        // Both panels share one top, so their titles stay level
+        var contentTop = Math.min.apply(null, all.map(function(p) { return p.top; }));
+        var contentHeight = Math.max.apply(null, all.map(function(p) { return p.bottom; })) - contentTop;
+        // How far each panel reaches from its parked edge toward the middle
+        var leftReach = Math.max.apply(null, left.pieces.map(function(p) { return p.right; }));
+        var rightReach = right.width - Math.min.apply(null, right.pieces.map(function(p) { return p.left; }));
+
+        var bandTop = (nav ? nav.getBoundingClientRect().bottom : 0) + headerGap;
+        var bandBottom = heroBox.height - bottomGap;
+
+        var scale = Math.min(
+            1,
+            (bandBottom - bandTop) / contentHeight,
+            (heroBox.width * (1 - 2 * sideInset) - centerGap) / (leftReach + rightReach)
+        );
+
+        // Burgers items that sit under the logo (the subheadings) must clear it
+        var logoBottom = 0;
+        var underLogo = [];
+        if (logo) {
+            var logoBox = logo.getBoundingClientRect();
+            logoBottom = logoBox.bottom - heroBox.top + logoGap;
+            underLogo = left.pieces.filter(function(p) {
+                return heroBox.width * sideInset + p.left * scale < logoBox.right - heroBox.left;
+            });
+            underLogo.forEach(function(p) {
+                scale = Math.min(scale, (bandBottom - logoBottom) / (contentHeight - (p.top - contentTop)));
+            });
+        }
+
+        var minTop = bandTop;
+        underLogo.forEach(function(p) {
+            minTop = Math.max(minTop, logoBottom - (p.top - contentTop) * scale);
+        });
+
+        // Designed position if the menu fits there, otherwise as high as the header allows
+        var designedTop = heroBox.height * designTop + contentTop * scale;
+        var menuTop = Math.max(minTop, Math.min(designedTop, bandBottom - contentHeight * scale));
+
+        hero.style.setProperty('--hero-menu-scale', scale.toFixed(4));
+        hero.style.setProperty('--hero-menu-top', (menuTop - contentTop * scale).toFixed(1) + 'px');
+    }
+
+    menuImages.forEach(function(img) {
+        img.addEventListener('load', fit);
+        img.addEventListener('error', fit);
+    });
+    window.addEventListener('load', fit);
+    window.addEventListener('resize', fit);
+    fit();
 }
 
 function initMenuBuilder() {

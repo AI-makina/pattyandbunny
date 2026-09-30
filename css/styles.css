@@ -346,6 +346,24 @@ img {
     right: -50%;
 }
 
+/* Desktop / tablet landscape: initHeroMenuFit() (main.js) sets these so the
+   whole menu fits in the viewport; the fallbacks are the designed layout */
+@media screen and (min-width: 991px) and (min-height: 501px) {
+    .hero-menu-left,
+    .hero-menu-right {
+        top: var(--hero-menu-top, 22%);
+        scale: var(--hero-menu-scale, 1);
+    }
+
+    .hero-menu-left {
+        transform-origin: top left;
+    }
+
+    .hero-menu-right {
+        transform-origin: top right;
+    }
+}
+
 .menu-grid {
     display: flex;
     flex-direction: column;
